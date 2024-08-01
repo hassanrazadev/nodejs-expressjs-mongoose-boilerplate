@@ -68,8 +68,8 @@ This template provides a robust starting point for building a Node.js applicatio
 
 1. Clone the Repository
 ```shell
-git clone https://github.com/hassanrazadev/nodejs-expressjs-boilerplate.git
-cd nodejs-expressjs-boilerplate
+git clone https://github.com/hassanrazadev/nodejs-expressjs-mongoose-boilerplate.git
+cd nodejs-expressjs-mongoose-boilerplate
 ```
 
 2. Install Dependencies
@@ -138,4 +138,4 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
-Made with ♥ by [Hassan Raza]("https://hassanraza.net") (<info@hassanraza.net>)
+Made with ❤️ by [Hassan Raza]("https://hassanraza.net") (<info@hassanraza.net>)
