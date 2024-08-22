@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/user.model';
+import {AppError} from "../utils/AppError";
 
 /**
  * Register user
@@ -47,13 +48,13 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            res.status(400).json({ message: 'Invalid email or password' });
+            next(new AppError("Invalid email or password"))
             return;
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            res.status(400).json({ message: 'Invalid email or password' });
+            next(new AppError("Invalid email or password"))
             return;
         }
 

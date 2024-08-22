@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Router} from 'express';
 import dotenv from 'dotenv';
 import { logger } from './middlewares/logger.middleware';
 import connectDB from "./config/db";
@@ -8,7 +8,9 @@ import acl from './middlewares/acl.middleware'
 
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
-import { authenticate } from "./middlewares/auth.middleware";
+import {checkRequestUser} from "./middlewares/auth.middleware";
+import {globalErrorHandlerMiddleware} from "./middlewares/globalErrorHandler.middleware";
+import {AppError} from "./utils/AppError";
 
 dotenv.config();
 
@@ -22,28 +24,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
 // use authenticated middleware
-app.use(authenticate);
+app.use(checkRequestUser);
 
-// configure acl
-app.use(acl);
+// apply acl to only defined routes
+const applyAclToRoute = (router: Router) => {
+    router.use(acl);
+    return router;
+}
 
 // routes definition
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/auth', applyAclToRoute(authRoutes));
+app.use('/api/users', applyAclToRoute(userRoutes));
 
-app.get('/', (req, res) => {
-    res.send('<h1>Welcome to nodejs-expressjs-boilerplate</h1>');
-});
-
-app.use(errorHandler);
 
 // 404 response
-app.use('*', (req, res) => {
-    res.status(404)
-        .json({
-            message: '404 - Not found'
-        })
-})
+app.use('*', (req, res, next) => {
+    console.log(req.originalUrl)
+    next(new AppError(`Route ${req.originalUrl} Not Found - 404`, 404));
+});
+
+app.use(globalErrorHandlerMiddleware);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
